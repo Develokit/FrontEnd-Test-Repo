@@ -174,12 +174,13 @@ export class UpdateComponent implements OnInit {
         .then((response) => {
           console.log('Response:', response);
           console.log(this.updateForm.value);
+          alert('수정되었습니다.');
         })
         .catch((error) => {
           console.error('Error:', error);
+          alert('수정에 실패하였습니다.');
         });
     }
-    alert('수정되었습니다.');
     this.router.navigate(['home']);
   }
 
