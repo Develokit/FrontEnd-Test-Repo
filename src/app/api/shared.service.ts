@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SharedService {
   private sharedId: string = '';
+  private tutorName : string = '';
 
   setId(id: string) {
     this.sharedId = id;
@@ -14,6 +15,14 @@ export class SharedService {
   getId(): string {
     console.log('Shared ID retrieved:', this.sharedId);
     return this.sharedId;
+  }
+
+  setTutorName(name : string){
+    this.tutorName = name;
+  }
+
+  getTutorName(){
+    return this.tutorName;
   }
 
   isLoading: boolean = false;

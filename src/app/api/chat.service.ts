@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import axios from 'axios';
 import { SharedService } from './shared.service';
+import {ChatTutorProfileService} from "./chat-tutor-profile.service";
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -95,9 +96,9 @@ export class ChatService {
         );
       }
       if (this.voicebool == false) {
-        newMessage = { sender: 'AI', text: response.data.answer };
+        newMessage = { sender: `${this.sharedService.getTutorName()}`, text: response.data.answer };
       } else {
-        newMessage = { sender: 'AI', text: response.data.chatDto.answer };
+        newMessage = { sender: `${this.sharedService.getTutorName()}`, text: response.data.chatDto.answer };
         // 동기처리 하는 부분
         this.setbtyeString(response.data.speech);
       }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { VoiceComponent } from '../voice/voice.component';
 import { ChatService } from '../../api/chat.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ChatTutorProfileService } from '../../api/chat-tutor-profile.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedService } from '../../api/shared.service';
@@ -86,7 +86,6 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
     if (this.newMessage.trim() !== '') {
       // 메시지와 함께 파일도 전송하는 경우
       if (this.selectedFile != null) {
-        // 나는 병신이야 나는 병신이야 나는 병신이야 ^^7
         this.chatService.addFile(this.selectedFile);
         this.chatService.addMessage({
           sender: '사용자',
@@ -118,6 +117,7 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
     this.chatprofileService
       .fetchProfile()
       .then((response) => {
+        this.sharedService.setTutorName(response.data.name);
         this.name = response.data.name; // response.data 객체에서 name 속성을 추출하여 컴포넌트의 name 변수에 할당
         this.imgFile = response.data.imgFile;
         this.description = response.data.description;
