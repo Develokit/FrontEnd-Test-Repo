@@ -140,6 +140,7 @@ export class UpdateComponent implements OnInit {
           console.log('Response:', response);
           console.log(this.updateForm.value);
           alert('수정되었습니다.');
+          this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -160,6 +161,7 @@ export class UpdateComponent implements OnInit {
           console.log('Response:', response);
           console.log(this.updateForm.value);
           alert('수정되었습니다.');
+          this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -179,13 +181,13 @@ export class UpdateComponent implements OnInit {
           console.log('Response:', response);
           console.log(this.updateForm.value);
           alert('수정되었습니다.');
+          this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
           alert('수정에 실패하였습니다.');
         });
     }
-    this.router.navigate(['home']);
   }
 
   deleteForm(): void {
