@@ -139,9 +139,11 @@ export class UpdateComponent implements OnInit {
         .then((response) => {
           console.log('Response:', response);
           console.log(this.updateForm.value);
+          alert('수정되었습니다.');
         })
         .catch((error) => {
           console.error('Error:', error);
+          alert('수정에 실패하였습니다.');
         });
     } else if (this.file1) {
       this.updateService
@@ -157,9 +159,11 @@ export class UpdateComponent implements OnInit {
         .then((response) => {
           console.log('Response:', response);
           console.log(this.updateForm.value);
+          alert('수정되었습니다.');
         })
         .catch((error) => {
           console.error('Error:', error);
+          alert('수정에 실패하였습니다.');
         });
     } else {
       this.updateService
