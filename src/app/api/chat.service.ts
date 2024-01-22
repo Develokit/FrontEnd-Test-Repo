@@ -165,7 +165,7 @@ export class ChatService {
   ) {
     const apiUrl = `${
       this.endpoint
-    }assistants/${this.sharedService.getId()}/chat`;
+    }assistants/${this.threadId}/chat`;
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
