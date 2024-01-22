@@ -91,15 +91,14 @@
     </label>
 
     <div
-      class="flex flex-row justify-center items-center border-2 border-dark-purple p-2 rounded-[20px] w-[200px] h-[30px]"
+      class="flex flex-grow justify-center items-center border-2 border-dark-purple p-2 rounded-[20px] w-[200px] h-[40px]"
     >
       <!-- 채팅 입력 영역 -->
-      <input
+      <textarea
         [(ngModel)]="newMessage"
-        type="text"
-        class="w-[160px] h-[22px]"
+        class="w-[160px] h-[20px]"
         placeholder="메시지 입력..."
-      />
+      ></textarea>
       <button (click)="toggleRecord()">
         <img
           *ngIf="isRecording"

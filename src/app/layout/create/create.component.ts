@@ -76,6 +76,18 @@ export class CreateComponent {
     private formbulider: FormBuilder
   ) {}
 
+  generateInstruction(){
+    alert("Instruction 업데이트 실행!!!!!");
+    this.createService.generateInstruction(this.createForm.value.instruction)
+      .then((response)=>{
+        console.log("response : " + response.data);
+        this.createForm.patchValue({ instruction: response.data });
+      })
+      .catch(error=>{
+        console.error("error :" + error);
+      })
+  }
+
   submitForm() {
     if (!this.imgFile || this.createForm.invalid) {
       alert('모든 필수 항목을 입력해주세요.');

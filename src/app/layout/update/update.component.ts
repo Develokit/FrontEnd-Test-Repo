@@ -95,6 +95,18 @@ export class UpdateComponent implements OnInit {
       });
   }
 
+  generateInstruction(){
+    alert("Instruction 업데이트 실행!!!!!");
+    this.updateService.generateInstruction(this.updateForm.value.instruction)
+      .then((response)=>{
+        console.log("response : " + response.data);
+        this.updateForm.patchValue({ instruction: response.data });
+      })
+      .catch(error=>{
+        console.error("error :" + error);
+      })
+  }
+
   submitForm(): void {
     const formData = this.updateForm.value;
     const updatedData = new FormData();

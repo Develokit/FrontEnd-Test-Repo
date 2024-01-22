@@ -9,7 +9,17 @@ export class UpdateService {
   constructor(private sharedService: SharedService) {}
 
   endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app/';
-
+  generateInstruction(beforeInstruction : string){
+    const apiUrl : string = `${this.endpoint}assistants/gpt`;
+    const config = {
+      headers: {
+        'content-type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      },
+    };
+    const data = {"instruction" : beforeInstruction};
+    return axios.post(apiUrl, data, config);
+  }
   getAssistantId(): string {
     return this.sharedService.getId(); // 직접 호출
   }

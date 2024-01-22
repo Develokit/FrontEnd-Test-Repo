@@ -91,6 +91,13 @@
       rows="6"
       maxlength="29999"
     ></textarea>
+    <button
+      type="button"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      (click)="generateInstruction()"
+    >
+      Generate Instruction
+    </button>
     <p class="text-right text-sm pb-5">{{ textLengthDescription }} / 30,000</p>
     <div class="text-base font-bold">튜터 기반 정보(선택사항)</div>
     <div class="text-xs mb-2.5">

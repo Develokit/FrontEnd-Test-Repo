@@ -90,6 +90,13 @@
       placeholder="ex. 한국어로 답변합니다."
       rows="6"
     ></textarea>
+    <button
+      type="button"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      (click)="generateInstruction()"
+    >
+      Generate Instruction
+    </button>
     <div class="text-base font-bold">튜터 기반 정보(선택사항)</div>
     <div class="text-xs mb-2.5">
       튜터에게 사전에 제공할 자료를 추가할 수 있습니다. <br />

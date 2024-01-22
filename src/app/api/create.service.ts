@@ -7,6 +7,20 @@ import axios from 'axios';
 export class CreateService {
   endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app';
 
+
+  generateInstruction(beforeInstruction : string){
+    const apiUrl : string = `${this.endpoint}/assistants/gpt`;
+    const config = {
+      headers: {
+        'content-type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      },
+    };
+    const data = {"instruction" : beforeInstruction};
+    return axios.post(apiUrl, data, config);
+  }
+
+
   // 파일 두 개를 모두 업로드
   handleDualFiles(
     img: File,
