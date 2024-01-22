@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import {environment} from "../../environment";
 import axios from 'axios';
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app';
+  endpoint: string = environment.endPoint;
   fetchHome() {
     const apiUrl = `${this.endpoint}/`; // 이것은 작은 따옴표가 아니야
     const config = {

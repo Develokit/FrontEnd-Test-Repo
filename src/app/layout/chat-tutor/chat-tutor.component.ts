@@ -46,8 +46,6 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
   private recognition: any; // SpeechRecognition의 타입을 any로 설정
   isRecording: boolean = false;
 
-  isLoading: boolean = this.sharedService.isLoading;
-
   constructor(
     private router: Router,
     public dialog: MatDialog,

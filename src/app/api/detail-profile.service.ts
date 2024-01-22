@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {environment} from "../../environment";
 import axios from 'axios';
 import { SharedService } from './shared.service';
 
@@ -7,11 +8,11 @@ import { SharedService } from './shared.service';
 })
 export class DetailProfileService {
   constructor(private sharedService: SharedService) {}
+  endpoint: string = environment.endPoint + "/";
 
   getAssistantId(): string {
     return this.sharedService.getId(); // 직접 호출
   }
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app/'; // API URL
 
   fetchProfile() {
     const apiUrl = `${

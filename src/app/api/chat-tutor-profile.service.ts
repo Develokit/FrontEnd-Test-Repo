@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { SharedService } from './shared.service';
+import {environment} from "../../environment";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ChatTutorProfileService {
   getAssistantId(): string {
     return this.sharedService.getId(); // 직접 호출
   }
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app/'; // API URL
+  endpoint: string = environment.endPoint + "/";
 
   fetchProfile() {
     const assistantId = this.getAssistantId();

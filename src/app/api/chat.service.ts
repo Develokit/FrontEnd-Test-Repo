@@ -8,13 +8,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import axios from 'axios';
 import { SharedService } from './shared.service';
-import {ChatTutorProfileService} from "./chat-tutor-profile.service";
+import {environment} from "../../environment";
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   // audio.service 주입
 
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app/'; // API URL
+  endpoint: string = environment.endPoint + "/";
   isFirst: boolean = true;
   threadId: string = '';
   selectedFile: File | null = null;
@@ -76,7 +76,6 @@ export class ChatService {
       let response;
       let newMessage;
       const assistantId = this.getAssistantId();
-      this.sharedService.isLoading = true;
 
       console.log('sendfileprompt 실행 전 : ' + this.selectedFile?.name);
       if (this.selectedFile != null) {
@@ -106,9 +105,7 @@ export class ChatService {
       this.messagesSource.next([...currentMessages, newMessage]);
     } catch (error) {
       console.error('에러:', error);
-      this.sharedService.isLoading = false;
     }
-    this.sharedService.isLoading = false;
     console.log('addmessage 종료');
   }
 

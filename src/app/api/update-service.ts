@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {environment} from "../../environment";
 import axios from 'axios';
 import { SharedService } from './shared.service';
 
@@ -8,7 +9,7 @@ import { SharedService } from './shared.service';
 export class UpdateService {
   constructor(private sharedService: SharedService) {}
 
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app/';
+  endpoint: string = environment.endPoint + "/";
   generateInstruction(beforeInstruction : string){
     const apiUrl : string = `${this.endpoint}assistants/gpt`;
     const config = {

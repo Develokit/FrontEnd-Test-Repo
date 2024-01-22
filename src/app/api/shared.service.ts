@@ -24,10 +24,4 @@ export class SharedService {
   getTutorName(){
     return this.tutorName;
   }
-
-  isLoading: boolean = false;
-
-  setIsLoading(value: boolean) {
-    this.isLoading = value;
-  }
 }

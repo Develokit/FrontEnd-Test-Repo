@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+import {environment} from "../../environment";
 import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateService {
-  endpoint: string = 'https://f430-122-202-203-67.ngrok-free.app';
-
+  endpoint: string = environment.endPoint;
 
   generateInstruction(beforeInstruction : string){
     const apiUrl : string = `${this.endpoint}/assistants/gpt`;
