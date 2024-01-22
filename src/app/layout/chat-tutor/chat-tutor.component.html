@@ -1,0 +1,122 @@
+<app-sub-header></app-sub-header>
+<app-chat-tutor-profile></app-chat-tutor-profile>
+<div class="flex flex-col justify-center items-center">
+  <div
+    class="flex flex-col h-[390px] w-80 bg-light-purple bg-opacity-15 rounded-2xl"
+  >
+    <div
+      *ngIf="messages.length === 0"
+      class="flex-1 overflow-auto p-4 flex justify-center items-center"
+    >
+      <div class="flex flex-col items-center justify-center">
+        <!-- 원형 아이콘 -->
+        <div
+          class="bg-white rounded-full w-24 h-24 border-4 border-blue-500 flex items-center justify-center"
+        >
+          <!-- 백엔드에서 받은 튜터의 프로필 사진 -->
+          <img [src]="imgFile" class="rounded-full" />
+        </div>
+
+        <!-- 텍스트 -->
+        <div class="text-center mt-4">
+          <h2 class="text-lg font-bold">{{ this.name }}</h2>
+          <p class="text-sm text-gray-500">
+            {{ this.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="messages.length > 0" class="flex-1 overflow-auto p-4">
+      <div
+        *ngFor="let message of messages"
+        class="message mb-2 p-2 border rounded"
+      >
+        <!-- <div *ngIf="!isLoading" class="absolute">
+          <mat-spinner></mat-spinner>
+          <p>Loading...</p>
+        </div>
+
+        <div *ngIf="!isLoading" class="absolute"></div> -->
+        <strong>{{ message.sender }}:</strong>
+        <!-- string 형태르 backend쪽에서 html 태그 형태로 보내줘서 front 측에서 innerthml형태로 받아오는 것!-->
+        <strong [innerHTML]="message.text"></strong>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex items-center justify-center preview-area bg-blue-500 w-full h-[20px]"
+  >
+    <!-- 이미지 미리보기 -->
+    <div *ngIf="selectedImageFile" class="relative inline-block">
+      <img [src]="selectedImageFile" class="w-24 h-auto" />
+      <button
+        (click)="removeSelectedImage()"
+        class="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+      >
+        X
+      </button>
+    </div>
+
+    <!-- 파일 미리보기 -->
+    <div *ngIf="selectedFile" class="flex relative inline-block">
+      <p class="p-2 text-xs font-bold">{{ selectedFile.name }}</p>
+      <button
+        (click)="removeSelectedFile()"
+        class="text-xs top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+      >
+        X
+      </button>
+    </div>
+  </div>
+  <div class="input-area flex items-center h-[40px] mb-1">
+    <!-- 이미지 선택 버튼 -->
+    <label class="button">
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        (change)="onImageSelect($event)"
+        [(ngModel)]="text"
+      />
+      <img src="assets/icons/Img_box_fill.svg" alt="이미지 선택" />
+    </label>
+
+    <!-- 파일 선택 버튼 -->
+    <label class="button">
+      <input type="file" hidden (change)="onFileSelect($event)" /><img
+        src="assets/icons/Folder_fill.svg"
+        alt="파일 선택"
+      />
+    </label>
+
+    <div
+      class="flex flex-row justify-center items-center border-2 border-dark-purple p-2 rounded-[20px] w-[200px] h-[30px]"
+    >
+      <!-- 채팅 입력 영역 -->
+      <input
+        [(ngModel)]="newMessage"
+        type="text"
+        class="w-[160px] h-[22px]"
+        placeholder="메시지 입력..."
+      />
+      <button (click)="toggleRecord()">
+        <img
+          *ngIf="isRecording"
+          src="assets/icons/Mic_fill_red.svg"
+          alt="Start"
+        />
+        <img *ngIf="!isRecording" src="assets/icons/Mic_fill.svg" alt="Stop" />
+      </button>
+    </div>
+
+    <button (click)="sendMessage()">
+      <img src="assets/icons/Send_fill.svg" alt="전송" />
+    </button>
+
+    <!-- voice modal 여는 버튼 -->
+    <button (click)="openDialog()" class="bg-transparent p-2">
+      <img src="assets/icons/Headphones_fill.svg" alt="voice 기능" />
+    </button>
+  </div>
+</div>

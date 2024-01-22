@@ -1,0 +1,33 @@
+<!-- 모달 컨테이너 -->
+<div
+  class="fixed top-0 left-0 h-screen w-screen bg-gray-500 bg-opacity-100 flex flex-col items-center justify-center"
+>
+  <!-- 모달 컨텐츠 -->
+  <div
+    class="bg-white p-6 rounded-full w-80 h-80 shadow-lg flex flex-col items-center justify-center"
+  >
+    <audio
+      id="audioCon"
+      *ngIf="audioUrl"
+      [src]="audioUrl"
+      controls
+      autoplay
+      hidden
+    ></audio>
+    <!-- 여기 text 부분 chat-tutor 화면에서도 기록이 남아야하고 결과적으로는 backend에 직접 보내고 대답을 음성으로 출력하는 상황이 만들어져야함 -->
+    <p class="text-center">{{ text }}</p>
+    <button
+      (click)="togglePlay()"
+      class="bg-light-gray text-white font-bold py-2 px-4 rounded-full"
+    >
+      <img *ngIf="isPlaying" src="assets/icons/Stop_fill.svg" alt="Pause" />
+      <img *ngIf="!isPlaying" src="assets/icons/Play_fill.svg" alt="Play" />
+    </button>
+  </div>
+  <button
+    class="mt-7 bg-material-color hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    (click)="closeModal()"
+  >
+    닫기
+  </button>
+</div>

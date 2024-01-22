@@ -1,0 +1,72 @@
+<app-sub-header></app-sub-header>
+<!-- Profile and Status Info -->
+<div class="flex flex-row text-center justify-center items-center m-6">
+  <div class="rounded-full border-2 border-dark-purple overflow-hidden mr-4">
+    <img [src]="this.img" class="w-[100px] h-[100px]" />
+  </div>
+  <div class="flex justify-center">
+    <h2 class="mt-2 font-bold text-[20px] max-w-[210px]">
+      {{ this.name }}
+    </h2>
+  </div>
+</div>
+<div class="flex justify-center items-center">
+  <div class="max-w-[314px] w-full md:w-auto">
+    <p class="text-gray-600 font-extrabold text-lg">소개</p>
+    <p class="text-sm text-gray-700 mt-1">
+      {{ this.description }}
+    </p>
+  </div>
+</div>
+<div class="flex justify-center items-center mt-6">
+  <div class="max-w-[314px] w-full md:w-auto">
+    <p class="text-gray-600 font-extrabold text-lg">튜터 성향</p>
+  </div>
+</div>
+<div class="flex flex-wrap justify-around gap-2.5 test-item class w-full">
+  <div>
+    <div
+      class="flex min-w-[120px] w-[120px] h-[54px] bg-material-color text-white rounded-2xl w-32 text-center justify-center items-center"
+    >
+      <p>{{ this.personality }}</p>
+    </div>
+    <p class="text-center font-bold text-[16px] mt-1">성격</p>
+  </div>
+
+  <div>
+    <div
+      class="flex min-w-[120px] w-[120px] h-[54px] bg-material-color text-white rounded-2xl w-32 text-center justify-center items-center"
+    >
+      <p>{{ this.speechLevel }}</p>
+    </div>
+    <p class="text-center font-bold text-[16px] mt-1">존대 여부</p>
+  </div>
+  <div>
+    <div
+      class="flex min-w-[120px] w-[120px] h-[54px] bg-material-color text-white rounded-2xl w-32 text-center justify-center items-center"
+    >
+      <p>{{ this.voice }}</p>
+    </div>
+    <p class="text-center font-bold text-[16px] mt-1">보이스 성별</p>
+  </div>
+</div>
+<div class="flex justify-end mb-4 mr-6">
+  <!-- 나중에 위치 조절 -->
+  <button
+    class="text-sm bg-dark-purple text-white rounded-2xl h-8 w-28 ml-1"
+    (click)="navigateToUpdate()"
+  >
+    수정 및 삭제
+  </button>
+</div>
+
+<!-- 이후 api test 할 때 확인하기(data 입력 받으면 flex 안에 div 생성)
+<div class="px-4 py-2 flex flex-wrap mt-1">
+  <div *ngFor="let item of data" class="flex justify-center w-1/2 p-2">
+    <div
+      class="flex items-center justify-center w-full h-[60px] bg-material-color text-white py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-material-color"
+    >
+      <p>{{ item }}</p>
+    </div>
+  </div>
+</div> -->

@@ -1,0 +1,47 @@
+<div class="mx-8">
+  <div class="font-bold">튜터 목록</div>
+  <!-- 그리드 -->
+  <div>
+    <mat-grid-list [cols]="cols" rowHeight="1:2" gutterSize="15px">
+      <!-- 튜터 생성하기 요소 -->
+      <mat-grid-tile
+        id="add-tutor"
+        class="flex items-center justify-centers"
+        (click)="onAddTileClick()"
+      >
+        <div class="flex flex-col">
+          <div
+            class="flex flex-col border-4 border-dark-purple rounded-full cursor-pointer overflow-hidden w-full aspect-w-1 aspect-h-1"
+          >
+            <img
+              src="assets/icons/create_Tutor.svg"
+              alt="이미지"
+              class="square-image text-center"
+            />
+          </div>
+          <div
+            class="flex rounded mx-auto pt-2 text-sm h-16 text-center text-dark-purple font-bold"
+          >
+            튜터 <br />
+            생성하기
+          </div>
+        </div>
+      </mat-grid-tile>
+      @for (tile of filteredTiles; track tile) {
+      <mat-grid-tile class="flex items-center justify-center">
+        <div class="flex flex-col">
+          <div
+            (click)="onTileClick(tile)"
+            class="flex flex-col border-4 border-purple-200 rounded-full cursor-pointer overflow-hidden"
+          >
+            <img [src]="tile.img" alt="이미지" class="square-image" />
+          </div>
+          <div class="flex rounded mx-auto pt-2 text-sm h-16 text-center">
+            {{ tile.name }}
+          </div>
+        </div>
+      </mat-grid-tile>
+      }
+    </mat-grid-list>
+  </div>
+</div>

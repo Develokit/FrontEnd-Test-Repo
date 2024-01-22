@@ -1,0 +1,34 @@
+<!-- <div *ngIf="data">
+  <img
+    class="rounded-full w-24 h-24 object-cover"
+    [src]="data.image"
+    alt="이미지"
+  />
+  <div>
+    <h2>임시이름{{ data.name }}</h2>
+    <p>임시설명{{ data.description }}</p>
+  </div>
+</div> -->
+<div class="flex justify-center justify-evenly h-71 w-full items-center p-4">
+  <!-- 원형 아이콘 -->
+  <div class="flex-shrink-0">
+    <div
+      class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center"
+    >
+      <!-- 이곳에 아이콘 SVG 또는 이미지 태그를 넣으세요 -->
+      <!-- tailwind로 원형틀 안에 사진 맞춰서 출력되게끔 할 것 -->
+      <img [src]="this.imgFile" class="rounded-full" />
+    </div>
+  </div>
+
+  <!-- 텍스트 -->
+  <div class="max-w-[266px]">
+    <!-- 최대 너비 설정 -->
+    <p class="text-lg font-bold font-medium truncate">
+      {{ this.name }}
+    </p>
+    <p class="text-base text-gray-500 truncate">
+      {{ this.description }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,209 @@
+<div class="font-bold flex flex-col items-center justify-center mb-3">
+  튜터 생성
+</div>
+<form
+  class="mx-8"
+  enctype="multipart/form-data"
+  [formGroup]="createForm"
+  (ngSubmit)="submitForm()"
+>
+  <div class="flex flex-col items-center justify-center">
+    <!-- 클릭하면 파일 입력을 활성화 -->
+    <div
+      class="w-24 h-24 rounded-full mb-5 overflow-hidden relative bg-white border-2 border-dark-purple flex items-center justify-center cursor-pointer"
+      (click)="fileInput.click()"
+    >
+      <!-- 이미지가 없는 경우 hide -->
+      <div class="w-full h-full object-cover" [class.hide]="!isImageUploaded">
+        <img [src]="uploadedImage" />
+      </div>
+      <div class="flex items-center justify-center">
+        <!-- 이미지파일만 업로드 가능 -->
+        <input
+          #fileInput
+          type="file"
+          formControlName="imgFile"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+        <!-- 이미지가 있는 경우 + hide -->
+        <div
+          class="text-5xl text-dark-purple font-thin"
+          [class.hide]="isImageUploaded"
+        >
+          + @if(getImgFile().invalid && getImgFile().touched){
+          <span class="text-red-500 text-xs font-thin">사진</span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <div class="text-base font-bold">
+      튜터 명 @if(getName().invalid && getName().touched){
+      <span class="text-red-500 text-xs font-thin">튜터 명을 입력해주세요</span>
+      }
+    </div>
+    <input
+      type="text"
+      class="input-under-bar"
+      formControlName="name"
+      (input)="onTextChangeName($event)"
+      placeholder="ex. OO대학교 자문 튜터"
+      maxlength="19"
+    />
+    <p class="text-right text-sm pb-5">{{ textLengthName }} / 20</p>
+    <div class="text-base font-bold">
+      튜터 소개 @if(getExplain().invalid && getExplain().touched){
+      <span class="text-red-500 text-xs font-thin"
+        >튜터 소개를 입력해주세요</span
+      >
+      }
+    </div>
+    <textarea
+      type="text"
+      class="input-under-bar"
+      formControlName="description"
+      (input)="onTextChangeInstruction($event)"
+      placeholder="튜터 설명을 작성해주세요."
+      rows="3"
+      maxlength="254"
+    ></textarea>
+    <p class="text-right text-sm pb-5">{{ textLengthInstruction }} / 255</p>
+    <div class="text-base font-bold">
+      튜터 규칙 설정 @if(getRule().invalid && getRule().touched){
+      <span class="text-red-500 text-xs font-thin"
+        >튜터 규칙을 입력해주세요</span
+      >
+      }
+    </div>
+    <div class="text-xs">
+      튜터가 어떤 규칙에 따라 답변을 작성할지 설정합니다.
+    </div>
+    <textarea
+      type="text"
+      class="input-under-bar"
+      formControlName="instruction"
+      (input)="onTextChangeDescription($event)"
+      placeholder="ex. 한국어로 답변합니다."
+      rows="6"
+      maxlength="29999"
+    ></textarea>
+    <p class="text-right text-sm pb-5">{{ textLengthDescription }} / 30,000</p>
+    <div class="text-base font-bold">튜터 기반 정보(선택사항)</div>
+    <div class="text-xs mb-2.5">
+      튜터에게 사전에 제공할 자료를 추가할 수 있습니다. <br />
+      파일 형식은 TXT, PDF 등을 지원합니다. (최대 2개)
+    </div>
+    <input
+      type="file"
+      id="file-input1"
+      formControlName="file1"
+      (change)="onFileSelect($event)"
+      hidden
+    />
+    <label
+      for="file-input1"
+      class="file-upload-icon"
+      [class.hide]="isFileUploaded"
+    >
+      <span [class.hide]="isFileUploaded">+</span>
+      <span class="block w-full text-center" [class.hide]="!isFileUploaded">{{
+        fileName1
+      }}</span>
+      <span
+        (click)="deleteFile1()"
+        [class.hide]="!isFileUploaded"
+        class="absolute right-11 pr-1 pl-2.5 font-normal text-sm"
+        >✕</span
+      >
+    </label>
+
+    <div [class.hide]="!isFileUploaded">
+      <input
+        type="file"
+        id="file-input2"
+        formControlName="file2"
+        (change)="onFileSelect2($event)"
+        hidden
+      />
+      <label
+        for="file-input2"
+        class="file-upload-icon"
+        [class.hide]="isFileUploaded2"
+      >
+        <span [class.hide]="isFileUploaded2">+</span>
+        <span [class.hide]="!isFileUploaded2">{{ fileName2 }}</span>
+        <span
+          (click)="deleteFile2($event)"
+          [class.hide]="!isFileUploaded2"
+          class="absolute right-11 pr-1 pl-2.5 font-normal text-sm"
+          >✕</span
+        >
+      </label>
+    </div>
+    <div class="text-base font-bold mt-1.5">튜터 성향</div>
+    <div class="text-xs">튜터의 성향을 설정합니다.</div>
+
+    <div class="flex items-center justify-center text-sm font-bold mb-1">
+      성격
+    </div>
+    @if(getPersonality().invalid && getPersonality().touched){
+    <span
+      class="flex items-center justify-center text-red-500 text-xs font-thin"
+      >성격을 선택해주세요</span
+    >
+    }
+    <div class="flex justify-center items-center h-full mb-4">
+      <mat-chip-listbox
+        formControlName="personality"
+        aria-label="Personality selection"
+      >
+        <mat-chip-option class="p-2" value="Kindness">상냥</mat-chip-option>
+        <mat-chip-option class="p-2" value="Seriousness">진지</mat-chip-option>
+        <mat-chip-option class="p-2" value="Humorousness">유머</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+    <div class="flex items-center justify-center text-sm font-bold mb-1">
+      보이스 성별(필수 사항)
+    </div>
+    @if(getVoice().invalid && getVoice().touched){
+    <span
+      class="flex items-center justify-center text-red-500 text-xs font-thin"
+      >보이스 성별을 선택해주세요</span
+    >
+    }
+    <div class="flex justify-center items-center h-full mb-4">
+      <mat-chip-listbox formControlName="voice" aria-label="Voice selection">
+        <mat-chip-option class="p-2" value="Female">여성</mat-chip-option>
+        <mat-chip-option class="p-2" value="Male">남성</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+    <div class="flex items-center justify-center text-sm font-bold mb-1">
+      존대 여부
+    </div>
+    @if(getAccent().invalid && getAccent().touched){
+    <span
+      class="flex items-center justify-center text-red-500 text-xs font-thin"
+      >존대 여부를 선택해주세요</span
+    >
+    }
+    <div class="flex justify-center items-center h-full mb-4">
+      <mat-chip-listbox
+        formControlName="speechLevel"
+        aria-label="Accent selection"
+      >
+        <mat-chip-option value="Formal">경어체</mat-chip-option>
+        <mat-chip-option value="Informal">평어체</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+    <button
+      type="submit"
+      class="bg-dark-purple text-white rounded-2xl h-10 mb-4"
+    >
+      생성하기
+    </button>
+  </div>
+</form>
