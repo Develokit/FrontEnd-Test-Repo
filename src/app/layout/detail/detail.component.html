@@ -1,5 +1,6 @@
 <app-sub-header></app-sub-header>
 <!-- Profile and Status Info -->
+<img *ngIf="isLoading" src="./assets/load.gif" alt="로딩 중" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" width="25%" height="25%" />
 <div class="flex flex-row text-center justify-center items-center m-6">
   <div class="rounded-full border-2 border-dark-purple overflow-hidden mr-4">
     <img [src]="this.img" class="w-[100px] h-[100px]" />

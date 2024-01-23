@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateService } from '../../api/create.service';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-create',
@@ -32,6 +33,7 @@ import { CreateService } from '../../api/create.service';
     MatInputModule,
     MatButtonModule,
     MatMenuModule,
+    NgIf,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
@@ -56,6 +58,7 @@ export class CreateComponent {
   textLengthName = 0; // 여기서부터 글자 수 세는거
   textLengthInstruction = 0;
   textLengthDescription = 0;
+  protected isLoading : boolean = false;
 
   createForm: FormGroup = new FormGroup({
     imgFile: new FormControl(null, [Validators.required]),
@@ -77,14 +80,16 @@ export class CreateComponent {
   ) {}
 
   generateInstruction(){
-    alert("Instruction 업데이트 실행!!!!!");
+    this.isLoading = true;
     this.createService.generateInstruction(this.createForm.value.instruction)
       .then((response)=>{
         console.log("response : " + response.data);
         this.createForm.patchValue({ instruction: response.data });
+        this.isLoading = false;
       })
       .catch(error=>{
         console.error("error :" + error);
+        this.isLoading = false;
       })
   }
 
@@ -93,6 +98,7 @@ export class CreateComponent {
       alert('모든 필수 항목을 입력해주세요.');
       return;
     }
+    this.isLoading = true;
     if (this.file1 && this.file2) {
       const formData = this.createForm.value;
 
@@ -113,10 +119,12 @@ export class CreateComponent {
         )
         .then((response) => {
           console.log('Response:', response);
+          this.isLoading = false;
           alert("튜터 생성이 완료되었습니다.");
           this.router.navigate(['home']);
         })
         .catch((error) => {
+          this.isLoading = false;
           console.error('Error:', error);
         });
     } else if (this.file1) {
@@ -138,11 +146,13 @@ export class CreateComponent {
         )
         .then((response) => {
           console.log('Response:', response);
+          this.isLoading = false;
           alert("튜터 생성이 완료되었습니다.");
           this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
+          this.isLoading = false;
         });
     } else {
       // 폼 그룹에서 사용자의 입력 데이터를 가져옵니다.
@@ -163,11 +173,13 @@ export class CreateComponent {
         )
         .then((response) => {
           console.log('Response:', response);
+          this.isLoading = false;
           alert("튜터 생성이 완료되었습니다.");
           this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
+          this.isLoading = false;
         });
     }
   }

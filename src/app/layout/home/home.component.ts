@@ -1,9 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { NgOptimizedImage } from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import { Router } from '@angular/router';
-
-import axios from 'axios';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HomeService } from '../../api/home-service';
 import { SharedService } from '../../api/shared.service';
@@ -18,14 +16,14 @@ export interface Tile {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule, NgOptimizedImage, RouterLink, RouterOutlet],
+  imports: [MatGridListModule, NgOptimizedImage, RouterLink, RouterOutlet, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   tiles: any[] = [];
-
   cols: number | undefined;
+  protected isLoading : boolean = false;
 
   @HostListener('window:resize')
   onResize() {
@@ -50,6 +48,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.homeService
       .fetchHome()
       .then((response) => {
@@ -61,9 +60,11 @@ export class HomeComponent implements OnInit {
           url: item.url,
           id: item.assistantId,
         }));
+        this.isLoading = false;
       })
       .catch((error) => {
         console.error('에러 메시지 : ' + error);
+        this.isLoading = false;
       });
   }
 

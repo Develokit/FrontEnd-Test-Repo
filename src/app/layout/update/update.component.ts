@@ -9,13 +9,12 @@ import {
 } from '@angular/forms';
 import { UpdateService } from '../../api/update-service';
 import { Router } from '@angular/router';
-import { HomeService } from '../../api/home-service';
-import axios from 'axios';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-update',
   standalone: true,
-  imports: [MatChipsModule, FormsModule, ReactiveFormsModule],
+  imports: [MatChipsModule, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss',
 })
@@ -39,6 +38,9 @@ export class UpdateComponent implements OnInit {
   voice: string = '';
   personality: string = '';
   speechLevel: string = '';
+  fileIds: string[] = [];
+  protected isLoading : boolean = false;
+
 
   updateForm: FormGroup = new FormGroup({
     imgFile: new FormControl(null, [Validators.required]),
@@ -55,11 +57,12 @@ export class UpdateComponent implements OnInit {
   constructor(private router: Router, private updateService: UpdateService) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.updateService
       .enterUpdateTutor()
       .then((response) => {
         console.log(JSON.stringify(response.data, null, 2));
-
+        this.isLoading = false;
         if (response && response.data) {
           const data = response.data; // 백엔드에서 받은 데이터
           this.updateForm.patchValue({
@@ -72,6 +75,7 @@ export class UpdateComponent implements OnInit {
           });
 
           this.beforeImgUrl = data.img; // 이미지 URL 받는거
+          this.fileIds = data.fileIds;
           this.isImageUploaded = true;
 
           // fileNames 배열 처리
@@ -84,33 +88,34 @@ export class UpdateComponent implements OnInit {
               this.isFileUploaded2 = true;
             }
           }
-
-          //console.log(this.updateForm.value);
         } else {
           console.log('No data available');
         }
       })
       .catch((error) => {
         console.error('Error fetching data in component: ', error);
+        this.isLoading = false;
       });
   }
 
   generateInstruction(){
-    alert("Instruction 업데이트 실행!!!!!");
+    this.isLoading = true;
     this.updateService.generateInstruction(this.updateForm.value.instruction)
       .then((response)=>{
         console.log("response : " + response.data);
         this.updateForm.patchValue({ instruction: response.data });
+        this.isLoading = false;
       })
       .catch(error=>{
         console.error("error :" + error);
+        this.isLoading = false;
       })
   }
 
   submitForm(): void {
     const formData = this.updateForm.value;
     const updatedData = new FormData();
-
+    this.isLoading = true;
     if (this.afterImgFile !== null) {
       this.updateService
         .updateImage(this.afterImgFile)
@@ -149,13 +154,15 @@ export class UpdateComponent implements OnInit {
           this.file2
         )
         .then((response) => {
-          console.log('Response:', response);
+          console.log('Response:', response.data);
           console.log(this.updateForm.value);
+          this.isLoading = false;
           alert('수정되었습니다.');
           this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
+          this.isLoading = false;
           alert('수정에 실패하였습니다.');
         });
     } else if (this.file1) {
@@ -170,13 +177,15 @@ export class UpdateComponent implements OnInit {
           this.file1
         )
         .then((response) => {
-          console.log('Response:', response);
+          console.log('Response:', response.data);
           console.log(this.updateForm.value);
+          this.isLoading = false;
           alert('수정되었습니다.');
           this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
+          this.isLoading = false;
           alert('수정에 실패하였습니다.');
         });
     } else {
@@ -192,11 +201,13 @@ export class UpdateComponent implements OnInit {
         .then((response) => {
           console.log('Response:', response);
           console.log(this.updateForm.value);
+          this.isLoading = false;
           alert('수정되었습니다.');
           this.router.navigate(['home']);
         })
         .catch((error) => {
           console.error('Error:', error);
+          this.isLoading = false;
           alert('수정에 실패하였습니다.');
         });
     }
@@ -204,22 +215,25 @@ export class UpdateComponent implements OnInit {
 
   deleteForm(): void {
     console.log('Form deleted');
-
+    this.isLoading = true;
     this.updateService
       .deleteTutor()
       .then((response) => {
         // 요청이 성공적으로 완료되었을 때
-        console.log('Delete response:', response);
+        console.log('Delete response:', response.data);
+        this.isLoading = false;
         alert('삭제되었습니다.');
         this.router.navigate(['home']);
       })
       .catch((error) => {
         // 오류가 발생했을 때
         console.error('Delete error:', error);
+        this.isLoading = false;
         alert('삭제에 실패했습니다.');
       });
   }
 
+  //사진 파일 업로드 하는 메서드
   onFileSelected(event: any): void {
     // 이벤트에서 선택된 파일을 가져옵니다.
     const file = event.target.files[0];

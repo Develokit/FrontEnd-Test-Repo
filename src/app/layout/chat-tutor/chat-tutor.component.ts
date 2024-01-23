@@ -45,6 +45,7 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
 
   private recognition: any; // SpeechRecognition의 타입을 any로 설정
   isRecording: boolean = false;
+  protected isLoading : boolean = false;
 
   constructor(
     private router: Router,
@@ -81,24 +82,34 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
   // 채팅창에 입력한 text가 출력되도록
   // 텍스트 입력 컴포넌트
   sendMessage() {
+    this.isLoading = true;
     if (this.newMessage.trim() !== '') {
       // 메시지와 함께 파일도 전송하는 경우
       if (this.selectedFile != null) {
         this.chatService.addFile(this.selectedFile);
         this.chatService.addMessage({
           sender: '사용자',
-          text: this.newMessage,
-        });
-        console.log(
-          'send message에서 add file이 실행된 후 : ' + this.selectedFile.name
-        );
-        this.selectedFile = null; // 파일 전송 후 선택된 파일 초기화
+          text: this.newMessage})
+          .then(response=>{
+            this.isLoading = false;
+          })
+          .catch(error=>{
+            console.error("error : " + error);
+            this.isLoading = false;
+          })
+        this.selectedFile = null;
       } else {
         // 파일 없이 메시지만 전송하는 경우
         this.chatService.addMessage({
           sender: '사용자',
-          text: `${this.newMessage}`,
-        });
+          text: `${this.newMessage}`})
+          .then(response=>{
+            this.isLoading = false;
+          })
+          .catch(error=>{
+            console.error("error : " + error);
+            this.isLoading = false;
+          })
       }
       this.newMessage = ``;
     }
@@ -111,7 +122,7 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
     this.chatService.currentMessages.subscribe((messages) => {
       this.messages = messages;
     });
-
+    this.isLoading = true;
     this.chatprofileService
       .fetchProfile()
       .then((response) => {
@@ -119,9 +130,11 @@ export class ChatTutorComponent implements OnInit, OnDestroy {
         this.name = response.data.name; // response.data 객체에서 name 속성을 추출하여 컴포넌트의 name 변수에 할당
         this.imgFile = response.data.imgFile;
         this.description = response.data.description;
+        this.isLoading = false;
       })
       .catch((error) => {
         console.error('에러 메시지 : ' + error);
+        this.isLoading = false;
       });
   }
 

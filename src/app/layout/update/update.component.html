@@ -1,3 +1,4 @@
+<img *ngIf="isLoading" src="./assets/load.gif" alt="로딩 중" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" width="25%" height="25%" />
 <div class="font-bold flex flex-col items-center justify-center mb-3">
   튜터 수정
 </div>
@@ -115,9 +116,9 @@
       [class.hide]="isFileUploaded"
     >
       <span [class.hide]="isFileUploaded">+</span>
-      <span class="block w-full text-center" [class.hide]="!isFileUploaded">{{
-        fileName1
-      }}</span>
+      <span class="block w-full text-center" [class.hide]="!isFileUploaded">
+        {{fileName1}}
+      </span>
       <span
         (click)="deleteFile1()"
         [class.hide]="!isFileUploaded"
@@ -126,7 +127,7 @@
       >
     </label>
 
-    <div [class.hide]="!isFileUploaded">
+    <div [class.hide]="isFileUploaded">
       <input
         type="file"
         id="file-input2"

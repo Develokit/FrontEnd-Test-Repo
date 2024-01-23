@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChatService } from '../../api/chat.service';
@@ -10,7 +10,7 @@ declare var webkitSpeechRecognition: any;
 @Component({
   selector: 'app-voice',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgOptimizedImage],
   templateUrl: './voice.component.html',
   styleUrls: ['./voice.component.scss'],
 })
@@ -22,9 +22,18 @@ export class VoiceComponent implements OnInit {
   isCheck = false;
   text = '음성으로 튜터와 대화합니다. \n버튼을 눌러 음성을 입력해주세요.';
   isPlaying: boolean = false;
+  protected isLoading : boolean = false;
   // 음성 인식 결과 처리 컴포넌트
   processVoiceToText(voiceText: string) {
-    this.chatService.addMessage({ sender: '음성 인식', text: voiceText });
+    this.isLoading = true;
+    this.chatService.addMessage({ sender: '음성 인식', text: voiceText })
+      .then(response=>{
+        this.isLoading = false;
+      })
+      .catch(error=>{
+        console.error("error : " + error);
+        this.isLoading = false;
+      })
   }
 
   sendVoiceBool() {

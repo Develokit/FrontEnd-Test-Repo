@@ -16,7 +16,7 @@ interface JsonData {
   styleUrl: './detail.component.scss',
   imports: [SubHeaderComponent, NgIf, NgFor],
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit{
   constructor(
     private detailprofileService: DetailProfileService,
     private sharedService: SharedService,
@@ -29,6 +29,7 @@ export class DetailComponent {
   personality: string = '';
   speechLevel: string = '';
   voice: string = '';
+  protected isLoading : boolean = false;
 
   // 튜터 성향에 따른 선택지에 따라 한국어 text 할당
   // ex. if(ps == kindness) print(친절함)
@@ -46,6 +47,7 @@ export class DetailComponent {
   };
 
   ngOnInit() {
+    this.isLoading = true;
     this.detailprofileService
       .fetchProfile()
       .then((response) => {
@@ -57,9 +59,11 @@ export class DetailComponent {
         this.speechLevel =
           this.jsonData[response.data.speechLevel as keyof JsonData];
         this.voice = this.jsonData[response.data.voice as keyof JsonData];
+        this.isLoading = false;
       })
       .catch((error) => {
         console.error('에러 메시지 : ' + error);
+        this.isLoading = false;
       });
   }
 

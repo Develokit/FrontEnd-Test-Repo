@@ -2,6 +2,7 @@
 <div
   class="fixed top-0 left-0 h-screen w-screen bg-gray-500 bg-opacity-100 flex flex-col items-center justify-center"
 >
+  <img *ngIf="isLoading" ngSrc="./assets/load.gif" alt="로딩 중" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" width="207" height="207" />
   <!-- 모달 컨텐츠 -->
   <div
     class="bg-white p-6 rounded-full w-80 h-80 shadow-lg flex flex-col items-center justify-center"

@@ -33,7 +33,7 @@ export class CreateService {
     file1: File,
     file2: File
   ) {
-    const apiUrl = `${this.endpoint}/assistants`;
+    const apiUrl = `${this.endpoint}/assistants/gpt4`; //TODO : 후에 바꾸기
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -65,7 +65,7 @@ export class CreateService {
     speechLevel: string,
     file1: File
   ) {
-    const apiUrl = `${this.endpoint}/assistants`;
+    const apiUrl = `${this.endpoint}/assistants/gpt4`;
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -96,7 +96,7 @@ export class CreateService {
     personality: string,
     speechLevel: string
   ) {
-    const apiUrl = `${this.endpoint}/assistants`;
+    const apiUrl = `${this.endpoint}/assistants/gpt4`;
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
